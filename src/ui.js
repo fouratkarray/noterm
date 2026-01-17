@@ -129,7 +129,7 @@ const App = () => {
 	});
 
 	const t = translations[lang];
-	const isCommand = input.startsWith('/languages');
+	const isCommand = input.startsWith('/');
 
 	return (
 		<Box flexDirection="column" padding={1}>
@@ -160,6 +160,13 @@ const App = () => {
 					))
 				)}
 			</Box>
+
+			{isCommand && !isLangMode && (
+				<Box flexDirection="column" marginBottom={1} borderStyle="single" borderColor="blue" paddingX={1}>
+					<Text bold color="blue">Commands:</Text>
+					<Text> /languages - {lang === 'fr' ? 'Changer la langue' : 'Change language'}</Text>
+				</Box>
+			)}
 
 			<Box borderStyle="round" borderColor={isLangMode ? "magenta" : (editIndex !== -1 ? "yellow" : "blue")} paddingX={1} width="100%">
 				<Box marginRight={1}>
