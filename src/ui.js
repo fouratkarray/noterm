@@ -22,7 +22,7 @@ const translations = {
 	}
 };
 
-const commands = ['/languages'];
+const commands = ['/languages', '/help', '/exit'];
 
 const App = () => {
 	const [notes, setNotes] = useState([]);
@@ -30,6 +30,7 @@ const App = () => {
 	const [editIndex, setEditIndex] = useState(-1);
 	const [lang, setLang] = useState('en');
 	const [isLangMode, setIsLangMode] = useState(false);
+	const [showHelp, setShowHelp] = useState(false);
 	const [commandIndex, setCommandIndex] = useState(0);
 	const {exit} = useApp();
 
@@ -38,7 +39,6 @@ const App = () => {
 			try {
 				const data = fs.readFileSync(NOTES_FILE, 'utf8');
 				const parsed = JSON.parse(data);
-				// Check if it's the old format or new format with settings
 				if (Array.isArray(parsed)) {
 					setNotes(parsed);
 				} else {
@@ -76,8 +76,17 @@ const App = () => {
 			return;
 		}
 
-		if (trimmedInput === '/languages') {
-			setIsLangMode(true);
+		if (trimmedInput.startsWith('/')) {
+			const selectedCommand = commands[commandIndex];
+			
+			if (selectedCommand === '/languages') {
+				setIsLangMode(true);
+			} else if (selectedCommand === '/help') {
+				setShowHelp(!showHelp);
+			} else if (selectedCommand === '/exit') {
+				exit();
+			}
+			
 			setInput('');
 			return;
 		}
@@ -106,7 +115,11 @@ const App = () => {
 
 	useInput((input, key) => {
 		if (key.escape) {
-			exit();
+			if (showHelp) {
+				setShowHelp(false);
+			} else {
+				exit();
+			}
 		}
 		
 		const isCommandInput = input.startsWith('/');
@@ -116,12 +129,12 @@ const App = () => {
 				const direction = key.downArrow ? 1 : -1;
 				const nextIndex = (commandIndex + direction + commands.length) % commands.length;
 				setCommandIndex(nextIndex);
-				setInput(commands[nextIndex]);
+				// Do NOT update input text, just the index
 			}
-			return; // Skip note navigation
+			return;
 		}
 
-		if (!isLangMode) {
+		if (!isLangMode && !showHelp) {
 			if (key.upArrow) {
 				if (notes.length === 0) return;
 				const newIndex = editIndex === -1 ? notes.length - 1 : Math.max(0, editIndex - 1);
@@ -161,29 +174,48 @@ const App = () => {
 				</Text>
 			</Box>
 
-			<Box flexDirection="column" marginBottom={1}>
-				{notes.length === 0 ? (
-					<Text color="gray">{t.noNotes}</Text>
-				) : (
-					notes.map((note, index) => (
-						<Box key={note.id}>
-							<Text color={index === editIndex ? "yellow" : "green"}>
-								{index === editIndex ? "✎ " : "- "}
-							</Text>
-							<Text color={index === editIndex ? "yellow" : "white"}>{note.text}</Text>
-						</Box>
-					))
-				)}
-			</Box>
+			{showHelp ? (
+				<Box flexDirection="column" marginBottom={1} borderStyle="double" borderColor="green" padding={1}>
+					<Text bold color="green">HELP / AIDE</Text>
+					<Text>Type text + Enter: Create note</Text>
+					<Text>Up/Down Arrow: Edit notes</Text>
+					<Text>Empty note + Enter: Delete note</Text>
+					<Text>/languages: Switch language</Text>
+					<Text>/exit: Quit application</Text>
+					<Text color="gray">Press Esc to close help</Text>
+				</Box>
+			) : (
+				<Box flexDirection="column" marginBottom={1}>
+					{notes.length === 0 ? (
+						<Text color="gray">{t.noNotes}</Text>
+					) : (
+						notes.map((note, index) => (
+							<Box key={note.id}>
+								<Text color={index === editIndex ? "yellow" : "green"}>
+									{index === editIndex ? "✎ " : "- "}
+								</Text>
+								<Text color={index === editIndex ? "yellow" : "white"}>{note.text}</Text>
+							</Box>
+						))
+					)}
+				</Box>
+			)}
 
-			{isCommand && !isLangMode && (
+			{isCommand && !isLangMode && !showHelp && (
 				<Box flexDirection="column" marginBottom={1} borderStyle="single" borderColor="blue" paddingX={1}>
 					<Text bold color="blue">Commands:</Text>
 					{commands.map((cmd, index) => (
-						<Text key={cmd} color={index === commandIndex ? "green" : "white"}>
-							{index === commandIndex ? "> " : "  "}
-							{cmd} - {cmd === '/languages' ? (lang === 'fr' ? 'Changer la langue' : 'Change language') : ''}
-						</Text>
+						<Box key={cmd}>
+							<Text color={index === commandIndex ? "green" : "white"} bold={index === commandIndex}>
+								{index === commandIndex ? "> " : "  "}
+								{cmd} 
+							</Text>
+							<Text color="gray">
+								{cmd === '/languages' ? (lang === 'fr' ? ' - Langue' : ' - Language') : 
+								 cmd === '/help' ? (lang === 'fr' ? ' - Aide' : ' - Help') :
+								 cmd === '/exit' ? (lang === 'fr' ? ' - Quitter' : ' - Exit') : ''}
+							</Text>
+						</Box>
 					))}
 				</Box>
 			)}
