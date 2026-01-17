@@ -184,52 +184,51 @@ const App = () => {
 					</Text>
 				</Box>
 	
-				{showHelp ? (
-					<Box flexDirection="column" marginBottom={1} borderStyle="double" borderColor="green" padding={1}>
-						<Text bold color="green">HELP / AIDE</Text>
-						<Text>Type text + Enter: Create note</Text>
-						<Text>Up/Down Arrow: Edit notes</Text>
-						<Text>Empty note + Enter: Delete note</Text>
-						<Text>/lang: Switch language</Text>
-						<Text>/exit: Quit application</Text>
-						<Text color="gray">Press Esc to close help</Text>
-					</Box>
-				) : (
-					<Box flexDirection="column" marginBottom={1}>
-						{notes.length === 0 ? (
-							<Text color="gray">{t.noNotes}</Text>
-						) : (
-							notes.map((note, index) => (
-								<Box key={note.id}>
-									<Text color={index === editIndex ? "yellow" : "green"}>
-										{index === editIndex ? "✎ " : "- "}
-									</Text>
-									<Text color={index === editIndex ? "yellow" : "white"}>{note.text}</Text>
+							{showHelp ? (
+								<Box flexDirection="column" marginBottom={1} borderStyle="double" borderColor="green" padding={1}>
+									<Text bold color="green">HELP / AIDE</Text>
+									<Text>Type text + Enter: Create note</Text>
+									<Text>Up/Down Arrow: Edit notes</Text>
+									<Text>Empty note + Enter: Delete note</Text>
+									<Text>/lang: Switch language</Text>
+									<Text>/exit: Quit application</Text>
+									<Text color="gray">Press Esc to close help</Text>
 								</Box>
-							))
-						)}
-					</Box>
-				)}
-	
-				{isCommand && !isLangMode && !showHelp && filteredCommands.length > 0 && (
-					<Box flexDirection="column" marginBottom={1} borderStyle="single" borderColor="blue" paddingX={1}>
-						<Text bold color="blue">Commands:</Text>
-						{filteredCommands.map((cmd, index) => (
-							<Box key={cmd}>
-								<Text color={index === commandIndex ? "green" : "white"} bold={index === commandIndex}>
-									{index === commandIndex ? "❯ " : "  "}
-									{cmd} 
-								</Text>
-								<Text color="gray">
-									{cmd === '/lang' ? (lang === 'fr' ? ' - Langue' : ' - Language') : 
-									 cmd === '/help' ? (lang === 'fr' ? ' - Aide' : ' - Help') : 
-									 cmd === '/exit' ? (lang === 'fr' ? ' - Quitter' : ' - Exit') : ''}
-								</Text>
-							</Box>
-						))}
-					</Box>
-				)}
-	
+							) : (
+								<Box flexDirection="column" marginBottom={1}>
+									{notes.length === 0 ? (
+										<Text color="gray">{t.noNotes}</Text>
+									) : (
+										notes.map((note, index) => (
+											<Box key={note.id}>
+												<Text color={index === editIndex ? "yellow" : "green"}>
+													{index === editIndex ? "✎ " : "- "}
+												</Text>
+												<Text color={index === editIndex ? "yellow" : "white"}>{note.text}</Text>
+											</Box>
+										))
+									)}
+								</Box>
+							)}
+				
+							{isCommand && !isLangMode && filteredCommands.length > 0 && (
+								<Box flexDirection="column" marginBottom={1} borderStyle="single" borderColor="blue" paddingX={1}>
+									<Text bold color="blue">Commands:</Text>
+									{filteredCommands.map((cmd, index) => (
+										<Box key={cmd}>
+											<Text color={index === commandIndex ? "green" : "white"} bold={index === commandIndex}>
+												{index === commandIndex ? "❯ " : "  "}
+												{cmd} 
+											</Text>
+											<Text color="gray">
+												{cmd === '/lang' ? (lang === 'fr' ? ' - Langue' : ' - Language') : 
+												 cmd === '/help' ? (lang === 'fr' ? ' - Aide' : ' - Help') :
+												 cmd === '/exit' ? (lang === 'fr' ? ' - Quitter' : ' - Exit') : ''}
+											</Text>
+										</Box>
+									))}
+								</Box>
+							)}	
 			<Box borderStyle="round" borderColor={isLangMode ? "magenta" : (editIndex !== -1 ? "yellow" : "blue")} paddingX={1} width="100%">
 				<Box marginRight={1}>
 					<Text color={isLangMode ? "magenta" : (editIndex !== -1 ? "yellow" : "blue")}>
