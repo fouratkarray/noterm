@@ -22,7 +22,7 @@ const translations = {
 	}
 };
 
-const commands = ['/languages', '/help', '/exit'];
+const commands = ['/lang', '/help', '/exit'];
 
 const App = () => {
 	const [notes, setNotes] = useState([]);
@@ -79,7 +79,7 @@ const App = () => {
 		if (trimmedInput.startsWith('/')) {
 			const selectedCommand = commands[commandIndex];
 			
-			if (selectedCommand === '/languages') {
+			if (selectedCommand === '/lang') {
 				setIsLangMode(true);
 			} else if (selectedCommand === '/help') {
 				setShowHelp(!showHelp);
@@ -180,7 +180,7 @@ const App = () => {
 					<Text>Type text + Enter: Create note</Text>
 					<Text>Up/Down Arrow: Edit notes</Text>
 					<Text>Empty note + Enter: Delete note</Text>
-					<Text>/languages: Switch language</Text>
+					<Text>/lang: Switch language</Text>
 					<Text>/exit: Quit application</Text>
 					<Text color="gray">Press Esc to close help</Text>
 				</Box>
@@ -211,7 +211,7 @@ const App = () => {
 								{cmd} 
 							</Text>
 							<Text color="gray">
-								{cmd === '/languages' ? (lang === 'fr' ? ' - Langue' : ' - Language') : 
+								{cmd === '/lang' ? (lang === 'fr' ? ' - Langue' : ' - Language') : 
 								 cmd === '/help' ? (lang === 'fr' ? ' - Aide' : ' - Help') :
 								 cmd === '/exit' ? (lang === 'fr' ? ' - Quitter' : ' - Exit') : ''}
 							</Text>
