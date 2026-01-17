@@ -96,7 +96,7 @@ const App = () => {
 
 			<Box flexDirection="column" marginBottom={1}>
 				{notes.length === 0 ? (
-					<Text color="gray">Aucune note. Écrivez quelque chose ci-dessous.</Text>
+					<Text color="gray">No notes. Type something below.</Text>
 				) : (
 					notes.map((note, index) => (
 						<Box key={note.id}>
@@ -120,13 +120,13 @@ const App = () => {
 						value={input}
 						onChange={setInput}
 						onSubmit={handleSubmit}
-						placeholder="Tapez votre note et appuyez sur Entrée..."
+						placeholder="Type your note and press Enter..."
 					/>
 				</Box>
 			</Box>
 			
 			<Box marginTop={1}>
-				<Text color="gray">Appuyez sur 'Echap' pour quitter.</Text>
+				<Text color="gray">Press 'Esc' to quit.</Text>
 			</Box>
 		</Box>
 	);
