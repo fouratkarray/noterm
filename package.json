@@ -12,7 +12,7 @@
   "bin": "src/cli.js",
   "description": "",
   "keywords": [],
-  "license": "ISC",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "build": "bun build --compile --minify --sourcemap src/cli.js --outfile noterm",
     "start": "bun src/cli.js",

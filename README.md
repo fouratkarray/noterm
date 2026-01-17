@@ -65,4 +65,10 @@ The application saves notes to `notes.json` in the current working directory.
 
 ## 📝 License
 
-This project is open source.
+This project is licensed under a custom agreement.
+
+*   ✅ **Forking**: Allowed and encouraged.
+*   ❌ **Commercial Use**: Strictly prohibited (cannot be sold).
+*   ❌ **Naming**: You cannot publish a copy of this exact code under the name "noterm".
+
+See the [LICENSE](LICENSE) file for details.
