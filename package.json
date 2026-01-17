@@ -1,0 +1,22 @@
+{
+  "name": "noterm",
+  "version": "1.0.0",
+  "author": "",
+  "main": "src/cli.js",
+  "dependencies": {
+    "ink": "^6.6.0",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.2.3",
+    "react-devtools-core": "^7.0.1"
+  },
+  "bin": "src/cli.js",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "scripts": {
+    "build": "bun build --compile --minify --sourcemap src/cli.js --outfile noterm",
+    "start": "bun src/cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module"
+}

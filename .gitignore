@@ -1,0 +1,7 @@
+node_modules
+dist
+notes.json
+.DS_Store
+noterm
+bun.lockb
+*.log
