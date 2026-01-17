@@ -2,7 +2,7 @@
 
 > **NOTERM** is a minimalist, terminal-based note-taking application built with [Ink](https://github.com/vadimdemedes/ink) and [React](https://reactjs.org/).
 
-![NOTERM Banner](https://via.placeholder.com/600x120/000000/00FFFF?text=NOTERM+CLI)
+![NOTERM Banner](./noterm.png)
 
 ## 🚀 Features
 
