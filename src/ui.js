@@ -22,12 +22,15 @@ const translations = {
 	}
 };
 
+const commands = ['/languages'];
+
 const App = () => {
 	const [notes, setNotes] = useState([]);
 	const [input, setInput] = useState('');
 	const [editIndex, setEditIndex] = useState(-1);
 	const [lang, setLang] = useState('en');
 	const [isLangMode, setIsLangMode] = useState(false);
+	const [commandIndex, setCommandIndex] = useState(0);
 	const {exit} = useApp();
 
 	useEffect(() => {
@@ -105,6 +108,18 @@ const App = () => {
 		if (key.escape) {
 			exit();
 		}
+		
+		const isCommandInput = input.startsWith('/');
+
+		if (isCommandInput && !isLangMode) {
+			if (key.downArrow || key.upArrow) {
+				const direction = key.downArrow ? 1 : -1;
+				const nextIndex = (commandIndex + direction + commands.length) % commands.length;
+				setCommandIndex(nextIndex);
+				setInput(commands[nextIndex]);
+			}
+			return; // Skip note navigation
+		}
 
 		if (!isLangMode) {
 			if (key.upArrow) {
@@ -164,7 +179,12 @@ const App = () => {
 			{isCommand && !isLangMode && (
 				<Box flexDirection="column" marginBottom={1} borderStyle="single" borderColor="blue" paddingX={1}>
 					<Text bold color="blue">Commands:</Text>
-					<Text> /languages - {lang === 'fr' ? 'Changer la langue' : 'Change language'}</Text>
+					{commands.map((cmd, index) => (
+						<Text key={cmd} color={index === commandIndex ? "green" : "white"}>
+							{index === commandIndex ? "> " : "  "}
+							{cmd} - {cmd === '/languages' ? (lang === 'fr' ? 'Changer la langue' : 'Change language') : ''}
+						</Text>
+					))}
 				</Box>
 			)}
 
