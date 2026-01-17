@@ -12,13 +12,13 @@ const translations = {
 		noNotes: "No notes. Type something below.",
 		placeholder: "Type your note and press Enter...",
 		quit: "Press 'Esc' to quit.",
-		langPrompt: "Choose language: 'english' or 'francais'",
+		langPrompt: "Choose language: 'en' or 'fr'",
 	},
 	fr: {
 		noNotes: "Aucune note. Écrivez quelque chose ci-dessous.",
 		placeholder: "Tapez votre note et appuyez sur Entrée...",
 		quit: "Appuyez sur 'Echap' pour quitter.",
-		langPrompt: "Choisissez la langue : 'english' ou 'francais'",
+		langPrompt: "Choisissez la langue : 'en' ou 'fr'",
 	}
 };
 
@@ -63,11 +63,11 @@ const App = () => {
 		const trimmedInput = input.trim().toLowerCase();
 
 		if (isLangMode) {
-			if (trimmedInput === 'english' || trimmedInput === 'en') {
+			if (trimmedInput === 'en') {
 				setLang('en');
 				setIsLangMode(false);
 				saveAll(notes, 'en');
-			} else if (trimmedInput === 'francais' || trimmedInput === 'fr') {
+			} else if (trimmedInput === 'fr') {
 				setLang('fr');
 				setIsLangMode(false);
 				saveAll(notes, 'fr');
